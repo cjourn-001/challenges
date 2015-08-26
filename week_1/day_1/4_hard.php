@@ -28,8 +28,15 @@
           	 'September',
           	 'November'
           	];
-
-          	// code goes here ...
+            
+          	unset ($monthExcludeArray[7]);
+          	
+          	$newArray = [
+          	    'April',
+          	    'September',
+          	    'December',
+          	    ];
+          	    echo var_dump($newArray);
           ?>
         </p>
 	</body>

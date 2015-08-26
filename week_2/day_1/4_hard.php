@@ -24,10 +24,26 @@
         <p>
 
             <?php
+			$divs3 = array();
+			$divs6 = array();
 
-
-                // code goes here ...
-
+                $numbers=range(1,100);
+               foreach($numbers as $key => $value){ 
+                if ($value%3 === 0){
+                	array_push($divs3, $value);
+                	echo "$value, ";
+                }
+              }
+              echo "Divisible by 3 = " . count($divs3);
+              
+              echo "<br />";
+               foreach($numbers as $key => $value){ 
+                if ($value%6 === 0){
+                	array_push($divs6, $value);
+                	echo "$value, ";
+                }
+              }
+               echo "Divisible by 6 = " . count($divs6);	
             ?>
         </p>
 	</body>

@@ -8,64 +8,61 @@
     <?php
 
     /**
-     * Red Ventures has partnered with the cable provider "Camcost" and will market and sell
-     * bundles of their TV and internet packages.
+     * Create a class called "ShoppingCart" and another class called "Item".
+     * Each item should have a name and price.
      *
-     * Camcost offers three TV packages:
-     * "Budget" for $19.99, "Regular" for $39.99 and "Couch Potato" for $79.99.
-     *
-     * The "Couch Potato" package is only available in Utah and Oregon.
-     *
-     * Camcost offers two internet packages: "SlowNet" and "FastNet". However, the price varies depending on
-     * the customer's location.
-     * For customers living in North or South Carolina, "SlowNet" is $29.99 and "FastNet" is $59.99.
-     * For customers anywhere else in the US, "SlowNet" is $24.99 and "FastNet" is $54.99.
-     *
-     * A "bundle" is considered to be the combination of one internet package and one TV package.
-     * For example, "Budget + SlowNet" is a bundle combining the "Budget" TV package and the "SlowNet" internet package.
-     * "Couch Potato + FastNet" is a bundle combining the "Couch Potato" TV package and the "FastNet" internet package.
-     *
-     * Create a class named "CamcostPricing" with a the public function: "getBundlesByZip".
-     *
-     * "getBundlesByZip" should take a customer's zip code and return all the possible bundles that the customer
-     * is eligible for, along with the cost of each bundle.
-     *
-     * For example, for a customer with the zip "28277" the function should return an array that looks like:
-     *
-     * array(
-     *     "Budget + SlowNet" => 49.98,
-     *     "Budget + FastNet" => 79.98,
-     *     "Regular + SlowNet" => 69.98,
-     *     "Regular + FastNet" => 99.98
-     * )
-     *
-     * This site will help you to know which zip codes belong to which states:
-     * @see https://smartystreets.com/articles/zip-codes-101
+     * Add these methods to your shopping cart:
+     *  - "addItem" to add an item to the cart.
+     *  - "getCostBeforeTax" to return the total cost of the items contained within it.
+     *  - "getTaxAmount" to return the amount of tax a customer would need to pay (assuming an 10% tax rate).
+     *  - "getCostAfterTax" to return the total cost of the items contained within it including tax.
      */
 
 
     ///////////////////////////
-    // Put your code here!
+    class ShoppingCart{
+        public $cartItems = array();
+        public function addItem($item){
+            $this->cartItems[] = $item;
+        }
+        public function getCostBeforeTax(){
+            $price = 0;
+            foreach($this->cartItems as $item){
+                $price += $item->price;
+            }
+            return $price;
+        }
+        public function getTaxAmount() {
+            $price = $this->getCostBeforeTax;
+            return $price * .1;
+        }
+        public function getCostAfterTax(){
+            $price = $this->getCostBeforeTax();
+            $tax = $this->getTaxAmount();
+            return $price + $tax;
+        }
+    }
+    class Item{
+        public $name;
+        public $price;
+        
+        public function __construct($name, $price){
+            $this->name = $name;
+            $this->price = $price;
+        }
+    }
     ///////////////////////////
 
 
-    $pricing = new CamcostPricing;
+    $cart = new ShoppingCart();
+    $cart->addItem(new Item('Cheap Book', 2.99));
+    $cart->addItem(new Item('Expensive Book', 24.99));
+    $cart->addItem(new Item('Movie', 12.99));
+    $cart->addItem(new Item('Video Game', 59.99));
 
-    $zip = '28277';
-    $bundles = $pricing->getBundlesByZip($zip);
-    echo "<h3>Camcost Bundles for customers in $zip</h3>";
-    showBundles($bundles);
-
-    $zip = '84101';
-    $bundles = $pricing->getBundlesByZip($zip);
-    echo "<h3>Camcost Bundles for customers in $zip</h3>";
-    showBundles($bundles);
-
-    function showBundles($bundles) {
-        foreach ($bundles as $bundleName=>$bundleCost) {
-            echo "<p>$bundleName: \$$bundleCost</p>";
-        }
-    }
+    echo "<p>Total cost before tax: \${$cart->getCostBeforeTax()}</p>";
+    echo "<p>Tax amount: \${$cart->getTaxAmount()}</p>";
+    echo "<p>Total cost after tax: \${$cart->getCostAfterTax()}</p>";
 
     ?>
 
